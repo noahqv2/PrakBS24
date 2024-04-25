@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="BSDocker (c6142571-eb55-4b47-bbe1-62645234a0b3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/PrakBS24" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-bsdocker" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-pc" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="PC">
+        <serverdata>
+          <mappings>
+            <mapping deploy="PrakBS24" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

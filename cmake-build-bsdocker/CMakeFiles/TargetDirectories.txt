@@ -1,0 +1,3 @@
+/tmp/tmp.RdAeTswFU2/cmake-build-bsdocker/CMakeFiles/rebuild_cache.dir
+/tmp/tmp.RdAeTswFU2/cmake-build-bsdocker/CMakeFiles/PrakBS24.dir
+/tmp/tmp.RdAeTswFU2/cmake-build-bsdocker/CMakeFiles/edit_cache.dir

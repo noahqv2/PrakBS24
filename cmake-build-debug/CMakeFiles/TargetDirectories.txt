@@ -1,0 +1,3 @@
+C:/Users/noaha/Documents/TH Koeln/BS/PrakBS24/cmake-build-debug/CMakeFiles/PrakBS24.dir
+C:/Users/noaha/Documents/TH Koeln/BS/PrakBS24/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/noaha/Documents/TH Koeln/BS/PrakBS24/cmake-build-debug/CMakeFiles/rebuild_cache.dir
