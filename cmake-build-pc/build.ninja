@@ -55,6 +55,18 @@ build CMakeFiles/PrakBS24.dir/main.c.obj: C_COMPILER__PrakBS24_unscanned_Debug C
   OBJECT_DIR = CMakeFiles\PrakBS24.dir
   OBJECT_FILE_DIR = CMakeFiles\PrakBS24.dir
 
+build CMakeFiles/PrakBS24.dir/sub.c.obj: C_COMPILER__PrakBS24_unscanned_Debug C$:/Users/noaha/Documents/TH$ Koeln/BS/PrakBS24/sub.c || cmake_object_order_depends_target_PrakBS24
+  DEP_FILE = CMakeFiles\PrakBS24.dir\sub.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\PrakBS24.dir
+  OBJECT_FILE_DIR = CMakeFiles\PrakBS24.dir
+
+build CMakeFiles/PrakBS24.dir/keyValStore.c.obj: C_COMPILER__PrakBS24_unscanned_Debug C$:/Users/noaha/Documents/TH$ Koeln/BS/PrakBS24/keyValStore.c || cmake_object_order_depends_target_PrakBS24
+  DEP_FILE = CMakeFiles\PrakBS24.dir\keyValStore.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\PrakBS24.dir
+  OBJECT_FILE_DIR = CMakeFiles\PrakBS24.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PrakBS24
@@ -63,7 +75,7 @@ build CMakeFiles/PrakBS24.dir/main.c.obj: C_COMPILER__PrakBS24_unscanned_Debug C
 #############################################
 # Link the executable PrakBS24.exe
 
-build PrakBS24.exe: C_EXECUTABLE_LINKER__PrakBS24_Debug CMakeFiles/PrakBS24.dir/main.c.obj
+build PrakBS24.exe: C_EXECUTABLE_LINKER__PrakBS24_Debug CMakeFiles/PrakBS24.dir/main.c.obj CMakeFiles/PrakBS24.dir/sub.c.obj CMakeFiles/PrakBS24.dir/keyValStore.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\PrakBS24.dir
