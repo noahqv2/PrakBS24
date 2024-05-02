@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if defined  _WIN64 || defined __CYGWIN__
+/*#if defined  _WIN64 || defined __CYGWIN__
     #include<winsock2.h>
     #include<Ws2tcpip.h>
-#else
+#else */
     #include <sys/socket.h>
     #include <arpa/inet.h>
     #include <netdb.h>
     #include <unistd.h>
     #include <netinet/in.h>
-#endif
+//#endif
+
 #include <sys/types.h>
 
 //int main(void) {
@@ -25,7 +26,7 @@ void error(const char *msg)
 
 int main(int argc , char *argv[])
 {
-#if defined _WIN64 || defined __CYGWIN__
+/*#if defined _WIN64 || defined __CYGWIN__
     WSADATA wsaData;
 
     int iResult;
@@ -35,7 +36,7 @@ int main(int argc , char *argv[])
         return 1;
     }
 #endif
-
+*/
     if(argc < 2)
     {
         fprintf(stderr, "Port nicht genannt. Programm wird geschlossen");
