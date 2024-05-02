@@ -8,6 +8,7 @@
             <mapping deploy="/tmp/PrakBS24" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-pc-coverage" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-bsdocker" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-pc" />
           </excludedPaths>
