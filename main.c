@@ -1,9 +1,11 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <string.h>
 
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
@@ -12,7 +14,6 @@
 
 
 int main() {
-
     int rfd; // Rendevouz-Descriptor
     int cfd; // Verbindungs-Descriptor
 
@@ -53,24 +54,38 @@ int main() {
         fprintf(stderr, "socket konnte nicht listen gesetzt werden\n");
         exit(-1);
     }
-
+    //Unendliche Schleife weil der Server solange laufen soll wie das Programm läuft.
     while (ENDLOSSCHLEIFE) {
 
         // Verbindung eines Clients wird entgegengenommen
         cfd = accept(rfd, (struct sockaddr *) &client, &client_len);
-
         // Lesen von Daten, die der Client schickt
         bytes_read = read(cfd, in, BUFSIZE);
 
-        // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
-        while (bytes_read > 0) {
-            printf("sending back the %d bytes I received...\n", bytes_read);
 
-            write(cfd, in, bytes_read);
-            bytes_read = read(cfd, in, BUFSIZE);
+        int pid;
+        //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
+        // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
+         if ((pid = fork()) == 0) {
 
-        }
-        close(cfd);
+             printf("success, \n PID:%i \n",getpid());
+             // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
+             while (bytes_read > 0) {
+                 write(cfd, in, bytes_read);
+                 bytes_read = read(cfd, in, BUFSIZE);
+                 printf("echoing %d bytes I received...\n", bytes_read);
+                 printf("\n Ausgegebene nachricht %s\n",in);
+                 //Leert den String
+                 memset(in,0,1024);
+             }
+         // Falls kein Fork erstell wurde wird die verbindung wieder geschlossen
+         } else {
+             printf("Fehler beim fork erstellen, %i", pid);
+             close(cfd);;
+
+         }
+
+         close(cfd);
     }
 
     // Rendevouz Descriptor schließen
