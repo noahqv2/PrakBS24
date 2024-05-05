@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include "keyValStore.h"
 
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
@@ -67,13 +68,27 @@ int main() {
         //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
         // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
          if ((pid = fork()) == 0) {
-
+             int auswahl;
+             char* eingabekey;
+             char* eingabevalue;
              printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
                  write(cfd, in, bytes_read);
                  bytes_read = read(cfd, in, BUFSIZE);
-                 printf("echoing %d bytes I received...\n", bytes_read);
+                 printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
+                 scanf("%i", &auswahl);
+                 if (auswahl==1) {
+                     printf("Geben sie ihren key ein");
+                     scanf("%[\n]", &eingabekey);
+                     printf("Geben Sie Ihre Data an");
+                     scanf("%[\n]", &eingabevalue);
+                     abspeichern(eingabekey, eingabevalue);
+
+
+
+                 }
+
                  printf("\n Ausgegebene nachricht %s\n",in);
                  //Leert den String
                  memset(in,0,1024);
