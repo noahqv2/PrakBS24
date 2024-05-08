@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
-#include "keyValStore.h"
+// #include "keyValStore.h"
 
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
@@ -76,15 +76,16 @@ int main() {
              while (bytes_read > 0) {
                  write(cfd, in, bytes_read);
                  bytes_read = read(cfd, in, BUFSIZE);
-                 printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
-                 scanf("%i", &auswahl);
+                // printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
+                // scanf("%i", &auswahl);
+                 printf("Ihre eingabe: %s", in);
                  if (auswahl==1) {
-                     printf("Geben sie ihren key ein");
-                     scanf("%[\n]", &eingabekey);
+                   /*  printf("Geben sie ihren key ein");
+                   //  scanf("%s", &eingabekey);
                      printf("Geben Sie Ihre Data an");
-                     scanf("%[\n]", &eingabevalue);
-                     abspeichern(eingabekey, eingabevalue);
-
+                    // scanf("%s", &eingabevalue);
+                   //  abspeichern(eingabekey, eingabevalue);
+                    */
 
 
                  }
