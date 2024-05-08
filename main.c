@@ -72,8 +72,8 @@ int main() {
         // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
          if ((pid = fork()) == 0) {
              int auswahl;
-             char* eingabekey;
-             char* eingabevalue;
+             char* eingabekey[BUFSIZE];
+             char* eingabevalue[BUFSIZE];
              printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
@@ -82,15 +82,16 @@ int main() {
                  bytes_read = read(cfd, in, BUFSIZE);
                  printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
                  fgets(full_input, sizeof(full_input),stdin);
+
                  full_input[strcspn(full_input, "\n")] = 0;
                  full_input[strcspn(full_input, "\r")] = 0;
 
                  printf("Ihre eingabe: %s", in);
                  if (strcmp(full_input,"GET")==0) {
-                    printf("Geben sie ihren key ein");
-                   //  scanf("%s", &eingabekey);
+                     printf("Geben sie ihren key ein");
+                     fgets(eingabekey, sizeof(eingabekey), stdin);
                      printf("Geben Sie Ihre Data an");
-                    // scanf("%s", &eingabevalue);
+                     fgets(eingabevalue, sizeof(eingabevalue), stdin);
                    //  abspeichern(eingabekey, eingabevalue);
 
 
