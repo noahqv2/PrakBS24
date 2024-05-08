@@ -1,0 +1,1 @@
+void strip_newline_carriage_return(char *str);
