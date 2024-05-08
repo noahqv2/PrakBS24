@@ -1,4 +1,8 @@
 char* savedkey;
 char* savedvalue;
 
-int abspeichern(char* key, char* value);
+char* abspeichern(char* key, char* value);
+
+char* aufrufen(char* key, char* res);
+
+char* del(char* key);

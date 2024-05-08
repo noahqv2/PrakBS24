@@ -75,6 +75,7 @@ int main() {
              int auswahl;
              char eingabekey[BUFSIZE];
              char eingabevalue[BUFSIZE];
+             char ausgabe[BUFSIZE];
              //printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
@@ -100,26 +101,20 @@ int main() {
                      printf("Geben sie ihren key ein\n");
                      read(cfd, in, BUFSIZE);
                      write(cfd, in, BUFSIZE);
-                    // fgets(eingabekey, sizeof(eingabekey), stdin);
-                     in[strcspn(in, "\n")] = 0;
-                     in[strcspn(in, "\r")] = 0;
+                     strcpy(in,stripstr(in));
                      strcpy(eingabekey, in);
-                     //write(cfd,in , BUFSIZE);
-
-                     //bytes_read = read(cfd, eingabekey, BUFSIZE);
                      printf("Geben Sie Ihre Data an\n");
-                //     fgets(eingabevalue, sizeof(eingabevalue), stdin);
                      read(cfd,in, BUFSIZE);
                      write(cfd,in, BUFSIZE);
-                     in[strcspn(in, "\n")] = 0;
-                     in[strcspn(in, "\r")] = 0;
-                     //write(cfd,eingabevalue , bytes_read);
+                     strcpy(in,stripstr(in));
                      strcpy(eingabevalue,in);
-                     abspeichern(eingabekey, eingabevalue);
-                        printf("end of loop\n");
-
-
+                     strcpy(ausgabe,abspeichern(eingabekey, eingabevalue));
+                        printf("%s\n", ausgabe);
+                 } else if (strcmp(in,"GET")==0) {
+                     strcpy(eingabekey,aufrufen("key",in));
+                     printf("%s\n", eingabekey);
                  } else {
+
                      printf("Failed\n");
                  }
 
