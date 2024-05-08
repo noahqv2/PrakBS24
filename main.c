@@ -72,8 +72,8 @@ int main() {
         // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
          if ((pid = fork()) == 0) {
              int auswahl;
-             char* eingabekey[BUFSIZE];
-             char* eingabevalue[BUFSIZE];
+             char eingabekey[BUFSIZE];
+             char eingabevalue[BUFSIZE];
              printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
