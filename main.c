@@ -17,6 +17,9 @@
 int main() {
     int rfd; // Rendevouz-Descriptor
     int cfd; // Verbindungs-Descriptor
+    char full_input[BUFSIZE];
+    int input_length = 0;
+
 
     struct sockaddr_in client; // Socketadresse eines Clients
     socklen_t client_len; // Länge der Client-Daten
@@ -74,18 +77,22 @@ int main() {
              printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
+
                  write(cfd, in, bytes_read);
                  bytes_read = read(cfd, in, BUFSIZE);
-                // printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
-                // scanf("%i", &auswahl);
+                 printf("Welche Operation wollen sie ausführen? 1:PUT 2:GET 3:DELETE");
+                 fgets(full_input, sizeof(full_input),stdin);
+                 full_input[strcspn(full_input, "\n")] = 0;
+                 full_input[strcspn(full_input, "\r")] = 0;
+
                  printf("Ihre eingabe: %s", in);
-                 if (auswahl==1) {
-                   /*  printf("Geben sie ihren key ein");
+                 if (strcmp(full_input,"GET")==0) {
+                    printf("Geben sie ihren key ein");
                    //  scanf("%s", &eingabekey);
                      printf("Geben Sie Ihre Data an");
                     // scanf("%s", &eingabevalue);
                    //  abspeichern(eingabekey, eingabevalue);
-                    */
+
 
 
                  }
