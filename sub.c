@@ -37,6 +37,8 @@ int checkcmd(char *str) {
         return  2;
     }else if (strcmp(str,"DEL")==0) {
         return 3;
+    }else if (strcmp(str,"QUIT")==0) {
+        return 4;
     }else {
         return -1;
     }

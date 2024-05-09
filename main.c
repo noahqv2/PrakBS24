@@ -90,28 +90,27 @@ int main() {
                  memset(in,0,1024);
                  //write(cfd, in, bytes_read);
                  //bytes_read = read(cfd, in, BUFSIZE);
-                 printf("Welche Operation wollen sie ausführen? PUT GET DELETE\n");
-
+                 printf("Welche Operation wollen sie ausführen? PUT GET DEL QUIT\n");
                  read(cfd, in,BUFSIZE);
                  write(cfd, in, BUFSIZE);
-
                  strcpy(in,stripstr(in));
-                 printf("%s in string\n",in);
+                 //printf("%s in string\n",in);
                  splitstr(in);
-
-               //  printf("\n %s Befehl\n %s key\n %s value\n",befehl,eingabekey,eingabevalue);
                  if (befehl != NULL) {
-
                      x=checkcmd(befehl);
                      if (x <0) {
                          printf("Unknown Command \n");
                      }else {
+                         if (x==4) {
+                             close(cfd);
+                             break;
+                         }
                          printf("%i x Wert \n",x);
                          if (eingabekey != NULL) {
                              if (eingabevalue != NULL) {
 
                                  if (x==1) {
-                                     printf("inside x==!\n");
+                                     printf("inside x==1\n");
                                      strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
                                  }
                              }
@@ -119,46 +118,15 @@ int main() {
                                  printf("inside x==2\n");
                                  printf("%s eingabekey\n",eingabekey);
                                  strcpy(ausgabe, aufrufen(eingabekey));
-                                 printf("%s Ausgabe",ausgabe);
+                                 printf("%s Ausgabe\n",ausgabe);
                              }
                              if (x==3) {
-                                // strcpy(ausgabe,del(eingabekey));
+                                 strcpy(ausgabe,leeren(eingabekey));
+                                 printf("%s Ausgabe\n", ausgabe);
                              }
                          }
                      }
                  }
-
-
-
-
-
-
-
- //                strcpy(ausgabe,abspeichern(eingabekey, eingabevalue));
-   //              printf("%s Ausgabe\n",ausgabe);
-                // memset(in,0,1024);
-                 /*if (strcmp(befehl,"PUT")==0) {
-                     printf("Geben sie ihren key ein\n");
-                     read(cfd, in, BUFSIZE);
-                     write(cfd, in, BUFSIZE);
-                     strcpy(in,stripstr(in));
-                     strcpy(eingabekey, in);
-                     printf("Geben Sie Ihre Data an\n");
-                     read(cfd,in, BUFSIZE);
-                     write(cfd,in, BUFSIZE);
-                     strcpy(in,stripstr(in));
-                     strcpy(eingabevalue,in);
-                     strcpy(ausgabe,abspeichern(eingabekey, eingabevalue));
-                        printf("%s\n", ausgabe);
-                 } else if (strcmp(in,"GET")==0) {
-                     strcpy(eingabekey,aufrufen("key",in));
-                     printf("%s\n", eingabekey);
-                 } else {
-
-                     printf("Failed\n");
-                 }
-                    */
-
                  //Leert den String
                  memset(in,0,1024);
              }

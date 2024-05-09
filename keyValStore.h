@@ -9,4 +9,4 @@ char* abspeichern(char* key, char* value);
 
 char* aufrufen(char* key);
 
-char* del(char* key);
+char* leeren(char* key);

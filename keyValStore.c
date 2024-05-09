@@ -2,19 +2,35 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <stdlib.h>
 #define BUFFSIZE 1024
 
 
+struct keyStore keydata[KEYLENGTH];
+int counter=0;
 char* abspeichern(char* key, char* value) {
-    int counter=0;
+    counter=0;
     char result[BUFFSIZE];
-    struct keyStore keydata[KEYLENGTH];
+    while (keydata[counter].key !=NULL || keydata[counter].key != "" || keydata[counter].data!=NULL ||keydata[counter].data !=""){
+        printf("In schleife\n");
+        printf("%s  wert in data\n ",keydata[counter].data);
+        if (keydata[counter].data ==NULL || keydata[counter].data =="" || strcmp(keydata[counter].data,result)==0) {
+            printf("Hier drinnen?\n");
+            break;
+        } else {
+            printf("Oder hier?\n");
+            counter++;
+        }
+
+    }
+    printf("%i zähler\n",counter);
     strcpy(keydata[counter].key, key); // for schleife einbauen wo hochgezählt wird, solange kein freier wert gefunden wird
     strcpy(result,value);
     strcpy(keydata[counter].data, value);
     sprintf(value,"PUT:%s:%s",key, result);
-    printf("%s key \n %s data\n",keydata->key, keydata->data);
+    strcpy(result,"");
+    printf("%s key \n%s data\n",keydata[counter].key, keydata[counter].data);
+    printf("in slot %i \n",counter);
     return value;
     printf("entered abspeichern\n");
     int x=0;
@@ -42,21 +58,80 @@ char* abspeichern(char* key, char* value) {
 }
 char* aufrufen(char* key) {
     //Keine Logik bis jetzt vorhanden, erst testen dann logik einfügen.
-    struct keyStore keydata[KEYLENGTH];
-    char tmp[sizeof(key)];
-    //printf("%s \n", keydata[0].data);
-    //sprintf(tmp,"GET:%s:%s",key, keydata[0].data);
-    strcpy(key,tmp);
-    return key;
+    int keychecker=0;
 
-}/*
-char* del(char* key)
-{
-    //Keine Logik bis jetzt vorhanden, erst testen dann logik einfügen
-    struct dataStore speicher;
-    struct keyStore keychecker;
-    strcpy(speicher.data1, "Leer");
-    strcpy(keychecker.key1,"Leer");
-    sprintf(key,"DEL:%s:%s_deleted",key,key);
+    char test[BUFFSIZE];
+    do{
+        if (strcmp(key,keydata[keychecker].key)==0) {
+            printf("Keychecker B\n");
+            counter=keychecker;
+        } else {
+
+            if (strcmp(keydata[counter].key,"")==0 || strcmp(keydata[counter].key,test)==0) {
+                /*if (strcmp(keydata[keychecker].key,test)==0) {
+                    printf("Keychecker D\n");
+                    break;
+                } else*/ if (strcmp(keydata[counter].data,"")==0 ) {
+                    printf("Keychecker E\n");
+                    printf("from%i",counter);
+                    int totalsize =snprintf(NULL,0,"GET:%s:%s",key, keydata[counter].data) +1;
+                    char* tmp =malloc(totalsize);
+                    sprintf(tmp,"GET:%s:%s",key, keydata[counter].data);
+                    strcpy(key,tmp);
+                    free(tmp);
+                    return key;
+                }
+                else {
+                    printf("%s keydata\n",keydata[keychecker].key);
+                    printf("%s test\n",test);
+                    printf("Keychecker C\n");
+                    int totalsize =snprintf(NULL,0,"GET:%s:%s",key, keydata[keychecker].data) +1;
+                    char* tmp =malloc(totalsize);
+                    sprintf(tmp,"GET:%s:%s_nonexistent",key, key);
+                    strcpy(key,tmp);
+                    free(tmp);
+                    return key;
+                }
+            }
+            counter=keychecker;
+            keychecker++;
+
+            printf("Keychecker A\n");
+
+        }
+    }while (strcmp(key,keydata[counter].key)!=0);
+    printf("%i zäääähler\n",counter);
+    printf("%swert in data\n", keydata[counter].data);
+    int totalsize =snprintf(NULL,0,"GET:%s:%s",key, keydata[keychecker].data) +1;
+
+    char* tmp =malloc(totalsize);
+    sprintf(tmp,"GET:%s:%s",key, keydata[counter].data);
+    strcpy(key,tmp);
+    free(tmp);
     return key;
-}*/
+}
+char* leeren(char* key)
+{
+    int keychecker=0;
+    do{
+        if (strcmp(key,keydata[keychecker].key)==0) {
+            printf("Keychecker B\n");
+            counter=keychecker;
+        } else {
+            keychecker++;
+            counter=keychecker;
+            printf("Keychecker A\n");
+
+        }
+    }while (strcmp(key,keydata[keychecker].key)!=0);
+    //Keine Logik bis jetzt vorhanden, erst testen dann logik einfügen
+    int totalsize = snprintf (NULL,0,"GET:%s:%s",key, keydata[keychecker].data) +1;
+    char* tmp=malloc(totalsize);
+    sprintf(tmp,"DEL:%s:%s_deleted",key,keydata[keychecker].data);
+    strcpy(keydata[keychecker].data, "");
+    strcpy(keydata[keychecker].key,"");
+    counter=keychecker;
+    strcpy(key,tmp);
+    free(tmp);
+    return key;
+}
