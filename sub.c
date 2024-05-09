@@ -16,12 +16,29 @@ char* stripstr(char *str) {
     return str;
 }
 
-char* splitstr(char *str) {
+void splitstr(char *str) {
 
 
-
-    char *token=strtok(str, ":");
-    while (token != NULL) {
-
+    befehl=strtok(str, ":");
+    if (befehl!= NULL) {
+        eingabekey= strtok(NULL,":");
     }
+    if (eingabekey!= NULL) {
+        eingabevalue= strtok(NULL, ":");
+    }
+
+    //char *token=strtok(str, ":");
+
+}
+int checkcmd(char *str) {
+    if (strcmp(str,"PUT")==0) {
+             return 1;
+    }else if (strcmp(str,"GET")==0) {
+        return  2;
+    }else if (strcmp(str,"DEL")==0) {
+        return 3;
+    }else {
+        return -1;
+    }
+
 }

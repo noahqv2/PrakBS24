@@ -68,6 +68,7 @@ int main() {
         // Verbindung eines Clients wird entgegengenommen
         cfd = accept(rfd, (struct sockaddr *) &client, &client_len);
         // Lesen von Daten, die der Client schickt
+        printf("Press ENTER to begin\n");
         bytes_read = read(cfd, in, BUFSIZE);
 
 
@@ -75,14 +76,18 @@ int main() {
         //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
         // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
          //if ((pid = fork()) == 0) {
-             char befehl[BUFSIZE];
-             char eingabekey[BUFSIZE];
-             char eingabevalue[BUFSIZE];
+            // char* befehl;
+             //char* eingabekey;
+             //char* eingabevalue;
              char ausgabe[BUFSIZE];
+
+
              //printf("success, \n PID:%i \n",getpid());
              // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
              while (bytes_read > 0) {
+                 int x=0;
 
+                 memset(in,0,1024);
                  //write(cfd, in, bytes_read);
                  //bytes_read = read(cfd, in, BUFSIZE);
                  printf("Welche Operation wollen sie ausführen? PUT GET DELETE\n");
@@ -92,12 +97,29 @@ int main() {
 
                  strcpy(in,stripstr(in));
                  printf("%s in string",in);
+                 splitstr(in);
                  //sscanf(in,"%9[^:]%9[^:] %9s",befehl,eingabekey,eingabevalue);
                  //strcpy(befehl,stripstr(befehl));
                  //strcpy(eingabekey,stripstr(eingabekey));
                  //strcpy(eingabevalue,stripstr(eingabevalue));
+                 //strcpy(eingabevalue, stripstr(eingabevalue));
                  printf("\n %s Befehl\n %s key\n %s value\n",befehl,eingabekey,eingabevalue);
-
+                 if (befehl != NULL) {
+                     if (checkcmd(befehl) <0) {
+                         printf("Unknown Command \n");
+                     }
+                 }
+                 if (eingabekey != NULL) {
+                     if (strcmp(eingabekey,"key1")==0) {
+                         printf("eingabekey allowed \n");
+                     }
+                 }
+                 if (eingabevalue != NULL) {
+                     if (strcmp(eingabevalue,"value1")==0) {
+                         printf("eingabevalue allowed \n");
+                     }
+                 }
+                // memset(in,0,1024);
                  /*if (strcmp(befehl,"PUT")==0) {
                      printf("Geben sie ihren key ein\n");
                      read(cfd, in, BUFSIZE);
