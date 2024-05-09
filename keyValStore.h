@@ -1,8 +1,12 @@
 char* savedkey;
 char* savedvalue;
-
+#define KEYLENGTH 100
+struct keyStore {
+    char key[KEYLENGTH];
+    char data[KEYLENGTH];
+};
 char* abspeichern(char* key, char* value);
 
-char* aufrufen(char* key, char* res);
+char* aufrufen(char* key);
 
 char* del(char* key);

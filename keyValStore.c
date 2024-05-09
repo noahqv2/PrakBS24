@@ -2,26 +2,19 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+
 #define BUFFSIZE 1024
 
-struct keyStore {
-    char key1[BUFFSIZE];
-    char key2[BUFFSIZE];
-    char key3[BUFFSIZE];
-};
-struct dataStore {
-    char data1[BUFFSIZE];
-    char data2[BUFFSIZE];
-    char data3[BUFFSIZE];
-};
+
 char* abspeichern(char* key, char* value) {
+    int counter=0;
     char result[BUFFSIZE];
-    struct dataStore speicher;
-    struct keyStore keycheck;
-    strcpy(keycheck.key1, key);
+    struct keyStore keydata[KEYLENGTH];
+    strcpy(keydata[counter].key, key); // for schleife einbauen wo hochgezählt wird, solange kein freier wert gefunden wird
     strcpy(result,value);
-    strcpy(speicher.data1, value);
+    strcpy(keydata[counter].data, value);
     sprintf(value,"PUT:%s:%s",key, result);
+    printf("%s key \n %s data\n",keydata->key, keydata->data);
     return value;
     printf("entered abspeichern\n");
     int x=0;
@@ -47,16 +40,16 @@ char* abspeichern(char* key, char* value) {
     }
 
 }
-char* aufrufen(char* key, char* res)
-{
+char* aufrufen(char* key) {
     //Keine Logik bis jetzt vorhanden, erst testen dann logik einfügen.
-    struct dataStore speicher;
-    struct keyStore keychecker;
-    strcpy(speicher.data1,res);
-    printf("%s", res);
-    return res;
+    struct keyStore keydata[KEYLENGTH];
+    char tmp[sizeof(key)];
+    //printf("%s \n", keydata[0].data);
+    //sprintf(tmp,"GET:%s:%s",key, keydata[0].data);
+    strcpy(key,tmp);
+    return key;
 
-}
+}/*
 char* del(char* key)
 {
     //Keine Logik bis jetzt vorhanden, erst testen dann logik einfügen
@@ -66,4 +59,4 @@ char* del(char* key)
     strcpy(keychecker.key1,"Leer");
     sprintf(key,"DEL:%s:%s_deleted",key,key);
     return key;
-}
+}*/

@@ -96,29 +96,46 @@ int main() {
                  write(cfd, in, BUFSIZE);
 
                  strcpy(in,stripstr(in));
-                 printf("%s in string",in);
+                 printf("%s in string\n",in);
                  splitstr(in);
-                 //sscanf(in,"%9[^:]%9[^:] %9s",befehl,eingabekey,eingabevalue);
-                 //strcpy(befehl,stripstr(befehl));
-                 //strcpy(eingabekey,stripstr(eingabekey));
-                 //strcpy(eingabevalue,stripstr(eingabevalue));
-                 //strcpy(eingabevalue, stripstr(eingabevalue));
-                 printf("\n %s Befehl\n %s key\n %s value\n",befehl,eingabekey,eingabevalue);
+
+               //  printf("\n %s Befehl\n %s key\n %s value\n",befehl,eingabekey,eingabevalue);
                  if (befehl != NULL) {
-                     if (checkcmd(befehl) <0) {
+
+                     x=checkcmd(befehl);
+                     if (x <0) {
                          printf("Unknown Command \n");
+                     }else {
+                         printf("%i x Wert \n",x);
+                         if (eingabekey != NULL) {
+                             if (eingabevalue != NULL) {
+
+                                 if (x==1) {
+                                     printf("inside x==!\n");
+                                     strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
+                                 }
+                             }
+                             if (x==2) {
+                                 printf("inside x==2\n");
+                                 printf("%s eingabekey\n",eingabekey);
+                                 strcpy(ausgabe, aufrufen(eingabekey));
+                                 printf("%s Ausgabe",ausgabe);
+                             }
+                             if (x==3) {
+                                // strcpy(ausgabe,del(eingabekey));
+                             }
+                         }
                      }
                  }
-                 if (eingabekey != NULL) {
-                     if (strcmp(eingabekey,"key1")==0) {
-                         printf("eingabekey allowed \n");
-                     }
-                 }
-                 if (eingabevalue != NULL) {
-                     if (strcmp(eingabevalue,"value1")==0) {
-                         printf("eingabevalue allowed \n");
-                     }
-                 }
+
+
+
+
+
+
+
+ //                strcpy(ausgabe,abspeichern(eingabekey, eingabevalue));
+   //              printf("%s Ausgabe\n",ausgabe);
                 // memset(in,0,1024);
                  /*if (strcmp(befehl,"PUT")==0) {
                      printf("Geben sie ihren key ein\n");
