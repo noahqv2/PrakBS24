@@ -72,7 +72,7 @@ int main() {
         //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
         // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
          //if ((pid = fork()) == 0) {
-             int auswahl;
+             char befehl[BUFSIZE];
              char eingabekey[BUFSIZE];
              char eingabevalue[BUFSIZE];
              char ausgabe[BUFSIZE];
@@ -83,21 +83,19 @@ int main() {
                  //write(cfd, in, bytes_read);
                  //bytes_read = read(cfd, in, BUFSIZE);
                  printf("Welche Operation wollen sie ausführen? PUT GET DELETE\n");
-                 memset(in,0,1024);
-                 //fgets(full_input, sizeof(full_input),stdin);
+
                  read(cfd, in,BUFSIZE);
                  write(cfd, in, BUFSIZE);
-                 //memset(in,0,1024);
-                 //printf("Oben liest\n");
-                 //read(cfd, in, BUFSIZE);
-                 //write(cfd,in,BUFSIZE);
-                 //printf("Oben schreibt\n");
-                 in[strcspn(in, "\n")] = 0;
-                 in[strcspn(in, "\r")] = 0;
-                // write(rfd, full_input, bytes_read);
 
+                 strcpy(in,stripstr(in));
+                 printf("%s in string",in);
+                 //sscanf(in,"%9[^:]%9[^:] %9s",befehl,eingabekey,eingabevalue);
+                 //strcpy(befehl,stripstr(befehl));
+                 //strcpy(eingabekey,stripstr(eingabekey));
+                 //strcpy(eingabevalue,stripstr(eingabevalue));
+                 printf("\n %s Befehl\n %s key\n %s value\n",befehl,eingabekey,eingabevalue);
 
-                 if (strcmp(in,"PUT")==0) {
+                 /*if (strcmp(befehl,"PUT")==0) {
                      printf("Geben sie ihren key ein\n");
                      read(cfd, in, BUFSIZE);
                      write(cfd, in, BUFSIZE);
@@ -117,7 +115,7 @@ int main() {
 
                      printf("Failed\n");
                  }
-
+                    */
 
                  //Leert den String
                  memset(in,0,1024);
