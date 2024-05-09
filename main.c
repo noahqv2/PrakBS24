@@ -6,8 +6,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#ifndef MAIN_H
+#define MAIN_H
 #include "sub.h"
 #include "keyValStore.h"
+#endif // MAIN_H
 
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
