@@ -105,18 +105,16 @@ int main() {
                              close(cfd);
                              break;
                          }
-                         printf("%i x Wert \n",x);
                          if (eingabekey != NULL) {
                              if (eingabevalue != NULL) {
-
                                  if (x==1) {
-                                     printf("inside x==1\n");
                                      strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
                                  }
+                             } else if (eingabevalue==NULL) {
+                                 printf("Value needed, operation failed\n");
                              }
                              if (x==2) {
-                                 printf("inside x==2\n");
-                                 printf("%s eingabekey\n",eingabekey);
+                                 //printf("%s eingabekey\n",eingabekey);
                                  strcpy(ausgabe, aufrufen(eingabekey));
                                  printf("%s Ausgabe\n",ausgabe);
                              }
