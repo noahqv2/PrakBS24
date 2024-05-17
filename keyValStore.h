@@ -1,5 +1,3 @@
-char* savedkey;
-char* savedvalue;
 #define KEYLENGTH 100
 struct keyStore {
     char key[KEYLENGTH];

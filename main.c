@@ -15,7 +15,7 @@
 #define BUFSIZE 1024 // Größe des Buffers
 #define TRUE 1
 #define ENDLOSSCHLEIFE 1
-#define PORT 4711
+#define PORT 5678
 
 
 int main() {
@@ -88,14 +88,13 @@ int main() {
                  int x=0;
 
                  memset(in,0,1024);
-                 //write(cfd, in, bytes_read);
-                 //bytes_read = read(cfd, in, BUFSIZE);
+
                  printf("Welche Operation wollen sie ausführen? PUT GET DEL QUIT\n");
                  read(cfd, in,BUFSIZE);
                  write(cfd, in, BUFSIZE);
                  strcpy(in,stripstr(in));
-                 //printf("%s in string\n",in);
                  splitstr(in);
+
                  if (befehl != NULL) {
                      x=checkcmd(befehl);
                      if (x <0) {
@@ -103,24 +102,22 @@ int main() {
                      }else {
                          if (x==4) {
                              close(cfd);
-                             break;
+                             close(rfd);
+                             return 0;
                          }
                          if (eingabekey != NULL) {
                              if (eingabevalue != NULL) {
                                  if (x==1) {
                                      strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
                                  }
-                             } else if (eingabevalue==NULL) {
-                                 printf("Value needed, operation failed\n");
-                             }
-                             if (x==2) {
-                                 //printf("%s eingabekey\n",eingabekey);
+                             } else if (x==2) {
                                  strcpy(ausgabe, aufrufen(eingabekey));
-                                 printf("%s Ausgabe\n",ausgabe);
-                             }
-                             if (x==3) {
+                                 printf("%s \n",ausgabe);
+                             } else if (x==3) {
                                  strcpy(ausgabe,leeren(eingabekey));
-                                 printf("%s Ausgabe\n", ausgabe);
+                                 printf("%s \n", ausgabe);
+                             } else if (eingabevalue==NULL)  {
+                                 printf("Value needed, operation failed\n");
                              }
                          }
                      }

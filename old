@@ -65,4 +65,5 @@ int main(int argc , char *argv[])
         error("Binding Failed");
 
 
-}
+}      //write(cfd, in, bytes_read);
+                 //bytes_read = read(cfd, in, BUFSIZE);

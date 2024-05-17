@@ -3,22 +3,19 @@
 #include <string.h>
 #ifndef SUB_H
 #define SUB_H
-
 #include "sub.h"
 #include "keyValStore.h"
 #endif // SUB_H
 
-int i=0;
 
+// function to clean input
 char* stripstr(char *str) {
     str[strcspn(str, "\n")] = 0;
     str[strcspn(str, "\r")] = 0;
     return str;
 }
-
+// function to seperate input by colon
 void splitstr(char *str) {
-
-
     befehl=strtok(str, ":");
     if (befehl!= NULL) {
         eingabekey= strtok(NULL,":");
@@ -26,10 +23,8 @@ void splitstr(char *str) {
     if (eingabekey!= NULL) {
         eingabevalue= strtok(NULL, ":");
     }
-
-    //char *token=strtok(str, ":");
-
 }
+// fuction to check input for given command
 int checkcmd(char *str) {
     if (strcmp(str,"PUT")==0) {
              return 1;
