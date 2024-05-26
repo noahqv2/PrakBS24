@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #define BUFFSIZE 1024
 
-
 struct keyStore keydata[KEYLENGTH];
 int counter=0;
 // function to save non exisiting key and data

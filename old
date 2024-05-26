@@ -67,3 +67,10 @@ int main(int argc , char *argv[])
 
 }      //write(cfd, in, bytes_read);
                  //bytes_read = read(cfd, in, BUFSIZE);
+                        //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
+        // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
+if ((pid = fork()) == 0) {
+}else {
+             printf("Fehler beim fork erstellen, %i", pid);
+             close(cfd);;
+         }

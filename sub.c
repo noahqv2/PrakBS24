@@ -8,6 +8,7 @@
 #endif // SUB_H
 
 
+
 // function to clean input
 char* stripstr(char *str) {
     str[strcspn(str, "\n")] = 0;

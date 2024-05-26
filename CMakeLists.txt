@@ -10,4 +10,5 @@ add_executable(PrakBS24 main.c
         sub.c
         keyValStore.h
         keyValStore.c
-        sub.h)
+        sub.h
+        client.c)

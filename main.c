@@ -6,10 +6,12 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <pthread.h>
 #ifndef MAIN_H
 #define MAIN_H
 #include "sub.h"
 #include "keyValStore.h"
+#include "client.h"
 #endif // MAIN_H
 
 #define BUFSIZE 1024 // Größe des Buffers
@@ -64,78 +66,25 @@ int main() {
     }
     //Unendliche Schleife weil der Server solange laufen soll wie das Programm läuft.
     while (ENDLOSSCHLEIFE) {
-
         // Verbindung eines Clients wird entgegengenommen
         cfd = accept(rfd, (struct sockaddr *) &client, &client_len);
         // Lesen von Daten, die der Client schickt
         printf("Press ENTER to begin\n");
         bytes_read = read(cfd, in, BUFSIZE);
 
+        client_args *args = malloc(sizeof(client_args));
+        args->client_socket = cfd;
+        args->bytes_read = bytes_read;
+        pthread_t thread;
+        pthread_create(&thread, NULL, handle_client,args);
+        printf("created thread\n");
+        pthread_detach(thread);
+        printf("Detached Thread \n");
 
-        int pid;
-        //Erstellt eine Fork um mehrere Clients gleichzeitig zu bearbeiten
-        // fork returned 0 falls eine fork erfolgreich erstellt wurden konnte,
-         //if ((pid = fork()) == 0) {
-            // char* befehl;
-             //char* eingabekey;
-             //char* eingabevalue;
-             char ausgabe[BUFSIZE];
+
+        //handle_client(cfd, bytes_read);
+        printf("outside\n");
 
 
-             //printf("success, \n PID:%i \n",getpid());
-             // Zurückschicken der Daten, solange der Client welche schickt (und kein Fehler passiert)
-             while (bytes_read > 0) {
-                 int x=0;
-
-                 memset(in,0,1024);
-
-                 printf("Welche Operation wollen sie ausführen? PUT GET DEL QUIT\n");
-                 read(cfd, in,BUFSIZE);
-                 write(cfd, in, BUFSIZE);
-                 strcpy(in,stripstr(in));
-                 splitstr(in);
-
-                 if (befehl != NULL) {
-                     x=checkcmd(befehl);
-                     if (x <0) {
-                         printf("Unknown Command \n");
-                     }else {
-                         if (x==4) {
-                             close(cfd);
-                             close(rfd);
-                             return 0;
-                         }
-                         if (eingabekey != NULL) {
-                             if (eingabevalue != NULL) {
-                                 if (x==1) {
-                                     strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
-                                 }
-                             } else if (x==2) {
-                                 strcpy(ausgabe, aufrufen(eingabekey));
-                                 printf("%s \n",ausgabe);
-                             } else if (x==3) {
-                                 strcpy(ausgabe,leeren(eingabekey));
-                                 printf("%s \n", ausgabe);
-                             } else if (eingabevalue==NULL)  {
-                                 printf("Value needed, operation failed\n");
-                             }
-                         }
-                     }
-                 }
-                 //Leert den String
-                 memset(in,0,1024);
-             }
-         // Falls kein Fork erstell wurde wird die verbindung wieder geschlossen
-     //    } else {
-       //      printf("Fehler beim fork erstellen, %i", pid);
-         //    close(cfd);;
-
-        // }
-
-       //  close(cfd);
     }
-
-    // Rendevouz Descriptor schließen
-    //close(rfd);
-
 }
