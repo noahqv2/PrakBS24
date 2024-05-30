@@ -1,3 +1,5 @@
 Make checking every keypair a function for easier use
 
 Make allocating memory a function for easier use
+
+Make creating a string compatible with write a function for easier use

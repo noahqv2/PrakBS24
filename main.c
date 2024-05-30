@@ -23,9 +23,9 @@
 int main() {
     int rfd; // Rendevouz-Descriptor
     int cfd; // Verbindungs-Descriptor
-    char full_input[BUFSIZE];
     int input_length = 0;
 
+    pthread_mutex_init(&mutex, NULL);
 
     struct sockaddr_in client; // Socketadresse eines Clients
     socklen_t client_len; // Länge der Client-Daten
@@ -73,11 +73,17 @@ int main() {
         bytes_read = read(cfd, in, BUFSIZE);
 
         client_args *args = malloc(sizeof(client_args));
+        // feeds data into struct declared in client.h to be accessable in client.c
         args->client_socket = cfd;
         args->bytes_read = bytes_read;
+
+
+
+        // gives name of thread then creates it.
         pthread_t thread;
         pthread_create(&thread, NULL, handle_client,args);
         printf("created thread\n");
+        // detaches it so it frees up after QUIT is entered or client disconnectes
         pthread_detach(thread);
         printf("Detached Thread \n");
 

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #define BUFFSIZE 1024
 
+
 void write_to_client(int client_socket, char* str) {
     int msg_len = BUFFSIZE; //snprintf(str,0, "var:key:value")+1; old code / Could be assigned dynamically, for that you would have to get current values and keys.
     char* tmp=malloc(msg_len);
@@ -25,26 +26,36 @@ void write_to_client(int client_socket, char* str) {
     printf("in write to client\n");
 }
 // Handles Client connection and doesnt return until terminated. Ignore IDE warning or else Server will wait until next client.
+// void *fun(void *arg) is required for pthread to work
 void *handle_client(void *arg) {
     char in[BUFFSIZE];
     char ausgabe[BUFFSIZE];
+
+    if(mutex_init_status != 0) {
+        perror("Mutex initialization failed");
+        exit(1);
+    }
+    // declaration of struct with var "args"
     client_args *args = (client_args*)arg;
     int client_socket = args->client_socket;
     int bytes_read = args->bytes_read;
     // Read data from client until an error occurs or client disconnects
     while (bytes_read  > 0) {
         // Process received data from client
-        //printf("Client: %s\n", in);
         memset(in, 0, BUFFSIZE);
-        printf("cleared input buff\n");
+        //printf("cleared input buff\n");
         memset(ausgabe,0,BUFFSIZE);
-        printf("cleared output buff\n");
+        //printf("cleared output buff\n");
         int x=0;
-        printf("Welche Operation wollen sie ausführen? PUT GET DEL QUIT\n");
+        //printf("Welche Operation wollen sie ausführen? PUT GET DEL QUIT\n");
+        // writes to client
+        strcpy(ausgabe,"Welche Operation wollen sie ausführen? PUT GET DEL QUIT BEG END\n");
+        write(client_socket,ausgabe,BUFFSIZE);
         read(client_socket, in,BUFFSIZE);
-        write(client_socket, in, BUFFSIZE);
+        //write(client_socket, in, BUFFSIZE);
         strcpy(in,stripstr(in));
         splitstr(in);
+        memset(ausgabe,0,BUFFSIZE);
 
         if (befehl != NULL) {
             x=checkcmd(befehl);
@@ -54,26 +65,30 @@ void *handle_client(void *arg) {
                     close(client_socket);
                     return NULL;
                 }
-                if (eingabekey != NULL) {
+                if (x==5) {
+                    lock_and_unlock_mutex(0, client_socket);
+
+                } else if (x==6) {
+                    lock_and_unlock_mutex(1, client_socket);
+
+                } if (eingabekey != NULL) {
                     if (eingabevalue != NULL) {
-                        if (x==1)  strcpy(ausgabe,abspeichern(eingabekey,eingabevalue));
+                        if (x==1) {
+                            strcpy(ausgabe,abspeichern(eingabekey,eingabevalue,client_socket));
+                            write_to_client(client_socket,ausgabe);
+                        }
                     } else if (x==2) {
-                        strcpy(ausgabe, aufrufen(eingabekey));
+                        strcpy(ausgabe, aufrufen(eingabekey, client_socket));
                         printf("%s \n",ausgabe);
                         write_to_client(client_socket,ausgabe);
                     } else if (x==3) {
-                        strcpy(ausgabe,leeren(eingabekey));
+                        strcpy(ausgabe,leeren(eingabekey,client_socket));
                         printf("%s \n", ausgabe);
                         write_to_client(client_socket,ausgabe);
                     } else if (eingabevalue==NULL) printf("Value needed, operation failed\n");
                 }
             }
         }
-        // Clear the input buffer
-
-        //
-
-        //free(args);
     }
 }
 

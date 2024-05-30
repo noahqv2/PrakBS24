@@ -1,16 +1,37 @@
 #include "keyValStore.h"
+#include "client.h"
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <pthread.h>
 #define BUFFSIZE 1024
 
 struct keyStore keydata[KEYLENGTH];
+int check = 0;
 int counter=0;
 // function to save non exisiting key and data
-char* abspeichern(char* key, char* value) {
+void lock_and_unlock_mutex(int option, int clientnum) {
+    if (option == 0) {
+        pthread_mutex_lock(&mutex);
+        printf("mutex locked\n");
+        check = clientnum;
+    } else if (option==1) {
+        if (check ==0 || check == clientnum) {
+            pthread_mutex_unlock(&mutex);
+            printf("mutex unlocked \n");
+            check = 0;
+        }
+    }
+}
+char* abspeichern(char* key, char* value,int clientnum) {
     counter=0;
+    printf("%i checking if locked..\n",check);
+    if (check >0 && clientnum!=check) {
+        return "Currently locked." ;
+    }
+
     char result[BUFFSIZE];
     // for loop to check for alphanumericity
     for(int i=0; key[i] != '\0';i++) {
@@ -38,8 +59,12 @@ char* abspeichern(char* key, char* value) {
     return value;
 }
 // function to call from existing key and return associated data
-char* aufrufen(char* key) {
+char* aufrufen(char* key, int clientnum) {
     int keychecker=0;
+    printf("%i checking if locked..\n",check);
+    if (check >0 && clientnum!=check) {
+        return "Currently locked." ;
+    }
     // checks every keypair to see if it exists and returns if found
     for (int i=0; i<100; i++) {
         if (strcmp(keydata[i].key,key)==0) {
@@ -74,9 +99,12 @@ char* aufrufen(char* key) {
     return key;
 }
 // function to clear key and associated data
-char* leeren(char* key)
+char* leeren(char* key, int clientnum)
 {
 
+    if (check >0 && clientnum!=check) {
+        return "Currently locked." ;
+    }
     bool exists = false;
     for (int i=0; i<100; i++) {
         if (strcmp(keydata[i].key,key)==0) {

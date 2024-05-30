@@ -35,8 +35,9 @@ int checkcmd(char *str) {
         return 3;
     }else if (strcmp(str,"QUIT")==0) {
         return 4;
-    }else {
-        return -1;
-    }
-
+    }else if (strcmp(str,"BEG")==0) {
+        return 5;
+    }else if (strcmp(str,"END")==0) {
+        return 6;
+    } else return -1;
 }
