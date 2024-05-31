@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #ifndef SUB_H
 #define SUB_H
@@ -28,7 +29,7 @@ void splitstr(char *str) {
 // fuction to check input for given command
 int checkcmd(char *str) {
     if (strcmp(str,"PUT")==0) {
-             return 1;
+        return 1;
     }else if (strcmp(str,"GET")==0) {
         return  2;
     }else if (strcmp(str,"DEL")==0) {
@@ -39,5 +40,15 @@ int checkcmd(char *str) {
         return 5;
     }else if (strcmp(str,"END")==0) {
         return 6;
+    }else if(strcmp(str,"SUB")==0) {
+        return 7;
     } else return -1;
 }
+/*Subbedkeys* createMemBlock(Subbedkeys* keysubber, int size) {
+    printf("Before creating keysub malloc\n");
+    keysubber=malloc(sizeof(keysubber));
+    printf("Before creating subbeddata malloc\n");
+    keysubber->subbeddata = malloc(size);
+    return keysubber;
+} */
+
